@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quà Tặng Giáng Sinh ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a0e2e;
+        }
+
+        body {
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Snowfall */
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10vh;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.9;
+            animation: snowfall linear infinite;
+            z-index: 1;
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
+        }
+
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(26, 14, 46, 0.97) 0%, rgba(22, 33, 62, 0.97) 50%, rgba(15, 52, 96, 0.97) 100%);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.6s ease;
+        }
+
+        .login-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 60px 50px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37), inset 0 0 20px rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) rotateX(20deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        .login-box h1 {
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(255, 71, 87, 0.5);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 2px 10px rgba(255, 71, 87, 0.5); }
+            50% { text-shadow: 0 2px 20px rgba(255, 71, 87, 0.8); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            transition: all 0.4s ease;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ff6b6b;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff1744 50%, #ff4757 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.5);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.7);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+            text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+        }
+
+        /* Main Content */
+        .main-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s ease;
+            position: relative;
+            z-index: 100;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 100;
+        }
+
+        .greeting {
+            color: white;
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            animation: fadeInDown 1s ease;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .highlight {
+            color: #ff1744;
+            font-weight: 700;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Gift Box */
+        .gift-box-container {
+            perspective: 1200px;
+            margin-top: 50px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gift-box {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            animation: boxBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes boxBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1) rotateY(10deg) rotateX(-5deg);
+            filter: drop-shadow(0 20px 40px rgba(255, 107, 107, 0.6));
+        }
+
+        .gift-box.opened {
+            animation: openGift 0.8s ease forwards;
+            pointer-events: none;
+        }
+
+        @keyframes openGift {
+            0% {
+                transform: rotateX(0) rotateY(0) rotateZ(0) scale(1);
+            }
+            50% {
+                transform: rotateX(-15deg) rotateY(20deg) rotateZ(10deg) scale(1.15);
+            }
+            100% {
+                transform: rotateX(-45deg) rotateY(45deg) rotateZ(30deg) translateY(-80px) scale(0.6);
+                opacity: 0;
+            }
+        }
+
+        .gift-box-body {
+            width: 100%;
+            height: 85%;
+            background: linear-gradient(135deg, #ff4757 0%, #ff6b6b 50%, #ff8787 100%);
+            border-radius: 18px;
+            position: relative;
+            box-shadow: 0 15px 50px rgba(255, 71, 87, 0.5), inset -5px -5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .gift-box-lid {
+            width: 100%;
+            height: 15%;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffc107 100%);
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .ribbon {
+            width: 35px;
+            height: 100%;
+            background: linear-gradient(90deg, #ff1744 0%, #ff5252 50%, #ff1744 100%);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50px;
+            box-shadow: 0 0 15px rgba(255, 23, 68, 0.5);
+        }
+
+        .bow {
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle at 35% 35%, #ff1744, #c41c3b);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: -35px -35px 0 -22px #ff1744, 35px -35px 0 -22px #ff1744, 0 0 20px rgba(255, 23, 68, 0.6);
+            animation: bowSpin 3s linear infinite;
+        }
+
+        @keyframes bowSpin {
+            0%, 100% { transform: translate(-50%, -50%) rotateZ(0deg); }
+            100% { transform: translate(-50%, -50%) rotateZ(360deg); }
+        }
+
+        .click-text {
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: 700;
+            pointer-events: none;
+            animation: floatText 2.5s ease infinite;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes floatText {
+            0%, 100% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) translateY(-15px);
+            }
+        }
+
+        /* Celebration Screen */
+        .celebration-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.95) 0%, rgba(255, 105, 180, 0.95) 50%, rgba(255, 215, 0, 0.9) 100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s ease;
+            z-index: 2000;
+            overflow: hidden;
+        }
+
+        .celebration-screen.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .celebration-text {
+            color: white;
+            font-size: 56px;
+            font-weight: 800;
+            text-align: center;
+            z-index: 2001;
+            animation: celebrationText 1.2s ease 0.5s both;
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 255, 255, 0.5);
+            max-width: 90%;
+            letter-spacing: 2px;
+        }
+
+        @keyframes celebrationText {
+            from {
+                opacity: 0;
+                transform: scale(0.3) rotateY(180deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateY(0);
+            }
+        }
+
+        .message-sub {
+            color: rgba(255, 255, 255, 0.98);
+            font-size: 24px;
+            margin-top: 25px;
+            animation: celebrationText 1.2s ease 0.8s both;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        /* Ticket Section */
+        .ticket-section {
+            position: fixed;
+            bottom: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2001;
+            animation: slideUpTicket 1.5s ease 2s both;
+        }
+
+        @keyframes slideUpTicket {
+            from {
+                bottom: -150px;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        .ticket {
+            background: linear-gradient(135deg, #fff8e1 0%, #fffde7 50%, #ffeb3b 100%);
+            border: 3px dashed #ff6b6b;
+            border-radius: 20px;
+            padding: 25px 40px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            position: relative;
+            animation: ticketPop 0.5s ease;
+        }
+
+        @keyframes ticketPop {
+            0% {
+                transform: scale(0.5) rotateZ(-20deg);
+            }
+            100% {
+                transform: scale(1) rotateZ(0deg);
+            }
+        }
+
+        .ticket::before, .ticket::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.95) 0%, rgba(255, 105, 180, 0.95) 50%, rgba(255, 215, 0, 0.9) 100%);
+            border-radius: 50%;
+        }
+
+        .ticket::before {
+            left: -12px;
+        }
+
+        .ticket::after {
+            right: -12px;
+        }
+
+        .ticket-logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .ticket-title {
+            color: #c41c3b;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ticket-value {
+            color: #ff1744;
+            font-size: 32px;
+            font-weight: 900;
+            margin: 15px 0;
+        }
+
+        .ticket-desc {
+            color: #666;
+            font-size: 12px;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        .ticket-code {
+            background: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #ff6b6b;
+            letter-spacing: 1px;
+            border: 2px solid #ff6b6b;
+        }
+
+        /* Characters */
+        .character {
+            position: fixed;
+            font-size: 120px;
+            animation: floatAround 4s ease-in-out infinite;
+            z-index: 50;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+        }
+
+        @keyframes floatAround {
+            0%, 100% {
+                transform: translateY(0px) translateX(0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50px) translateX(30px) rotate(15deg) scale(1.1);
+            }
+        }
+
+        .gifts {
+            position: fixed;
+            font-size: 50px;
+            animation: fallAndSpin 3s ease-in forwards;
+            z-index: 50;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+        }
+
+        @keyframes fallAndSpin {
+            0% {
+                transform: translateY(-100vh) translateX(0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(80px) rotate(720deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            animation: confettiFall 3.5s ease-in forwards;
+            z-index: 50;
+            border-radius: 50%;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(150px) rotate(720deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            animation: particleFloat 2s ease-out forwards;
+            z-index: 50;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .greeting { font-size: 28px; }
+            .gift-box { width: 160px; height: 160px; }
+            .celebration-text { font-size: 36px; }
+            .ticket { width: 280px; padding: 20px 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div id="snowflakes"></div>
+
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <h1>🎄 Mở Quà Noel 🎄</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" id="username" placeholder="Nhập tên đăng nhập" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" placeholder="Nhập mật khẩu" required>
+                </div>
+                <button type="button" class="login-btn" onclick="handleLogin()">🎅 Vào 🎅</button>
+                <div class="error" id="error"></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="container">
+            <div class="greeting">
+                Anh chỉ muốn nói <span class="highlight">1 điều là</span>...
+            </div>
+            <div class="gift-box-container">
+                <div class="gift-box" id="giftBox">
+                    <div class="gift-box-lid">
+                        <div class="ribbon"></div>
+                        <div class="bow"></div>
+                    </div>
+                    <div class="gift-box-body">
+                        <div class="click-text">Nhấn vào 👆</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="celebration-screen" id="celebrationScreen">
+        <div class="celebration-text">Anh yêu em rất nhiều! ❤️</div>
+        <div class="message-sub">✨ Merry Christmas ✨</div>
+        
+        <div class="ticket-section" id="ticketSection">
+            <div class="ticket">
+                <div class="ticket-logo">🍜 CHANG KANG KUNG 🍜</div>
+                <div class="ticket-title">Voucher Ăn Miễn Phí</div>
+                <div class="ticket-value">100%</div>
+                <div class="ticket-desc">VÀ TỰ DO CHỌN MỘN YÊU THÍCH</div>
+                <div class="ticket-code">CODE: DAPHINA2024</div>
+                <div class="ticket-desc" style="margin-top: 8px; font-size: 11px; color: #999;">
+                    💝 Tặng từ anh - Giáng sinh 2024 💝
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createSnowflakes() {
+            const container = document.getElementById('snowflakes');
+            for (let i = 0; i < 60; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 5 + 10) + 's';
+                snowflake.style.animationDelay = Math.random() * 3 + 's';
+                snowflake.style.width = (Math.random() * 8 + 4) + 'px';
+                snowflake.style.height = snowflake.style.width;
+                container.appendChild(snowflake);
+            }
+        }
+
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorEl = document.getElementById('error');
+
+            if (username === 'daphina' && password === 'daphina') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('mainContent').classList.add('visible');
+                errorEl.style.display = 'none';
+            } else {
+                errorEl.textContent = '❌ Tên đăng nhập hoặc mật khẩu không đúng!';
+                errorEl.style.display = 'block';
+            }
+        }
+
+        document.getElementById('giftBox').addEventListener('click', function() {
+            this.classList.add('opened');
+            setTimeout(() => {
+                document.getElementById('mainContent').classList.remove('visible');
+                document.getElementById('celebrationScreen').classList.add('active');
+                createCelebration();
+            }, 700);
+        });
+
+        function createCelebration() {
+            const characters = ['🎅', '🦌', '⛄'];
+            for (let i = 0; i < 6; i++) {
+                const char = document.createElement('div');
+                char.className = 'character';
+                char.textContent = characters[Math.floor(Math.random() * characters.length)];
+                char.style.left = Math.random() * 80 + 10 + '%';
+                char.style.bottom = Math.random() * 40 + 20 + '%';
+                char.style.animationDuration = (Math.random() * 2 + 3.5) + 's';
+                char.style.animationDelay = Math.random() * 0.8 + 's';
+                document.body.appendChild(char);
+            }
+
+            const gifts = ['🎁', '🎀', '❄️', '⭐', '🎄', '🍖'];
+            for (let i = 0; i < 50; i++) {
+                const gift = document.createElement('div');
+                gift.className = 'gifts';
+                gift.textContent = gifts[Math.floor(Math.random() * gifts.length)];
+                gift.style.left = Math.random() * 100 + '%';
+                gift.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+                gift.style.animationDelay = Math.random() * 0.4 + 's';
+                document.body.appendChild(gift);
+            }
+
+            const colors = ['#ff6b6b', '#ffd700', '#ff1744', '#00ff88', '#00bfff', '#ff69b4', '#ffed4e'];
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '50%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2.5 + 2.5) + 's';
+                confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                document.body.appendChild(confetti);
+            }
+
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = ['💝', '✨', '💖', '🌟', '💕'][Math.floor(Math.random() * 5)];
+                particle.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                particle.style.left = '50%';
+                particle.style.top = '50%';
+                
+                const angle = (Math.PI * 2 * i) / 30;
+                const distance = Math.random() * 300 + 200;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.setProperty('--ty', ty + 'px');
+                particle.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+                particle.style.animationDelay = Math.random() * 0.5 + 's';
+                document.body.appendChild(particle);
+            }
+
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'character';
+                heart.textContent = '💖';
+                heart.style.left = 50 + (Math.random() - 0.5) * 40 + '%';
+                heart.style.bottom = 50 + (Math.random() - 0.5) * 30 + '%';
+                heart.style.fontSize = (Math.random() * 60 + 40) + 'px';
+                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                heart.style.animationDelay = Math.random() * 0.5 + 's';
+                heart.style.opacity = 0.6;
+                document.body.appendChild(heart);
+            }
+        }
+
+        createSnowflakes();
+    </script>
+</body>
+</html>
